@@ -1,59 +1,55 @@
-package zarde.xd.zardexhoppersort;
+package zarde.xd.zardexhoppersort
 
-import org.bukkit.block.Container;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryMoveItemEvent;
-import org.bukkit.event.inventory.InventoryPickupItemEvent;
-import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.block.Container
+import org.bukkit.event.EventHandler
+import org.bukkit.event.Listener
+import org.bukkit.event.inventory.InventoryMoveItemEvent
+import org.bukkit.event.inventory.InventoryPickupItemEvent
+import org.bukkit.event.inventory.InventoryType
+import java.util.*
 
-
-import java.util.Arrays;
-
-public class HopperSort implements Listener {
-    String getItemName(String translationKey){
-        if(translationKey ==null) return null;
-        String[] names = translationKey.split("\\.");
-        return names[names.length-1];
+class HopperSort : Listener {
+    fun getItemName(translationKey: String?): String? {
+        if (translationKey == null) return null
+        val names = translationKey.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        return names[names.size - 1]
     }
-    boolean filterMatch(String filterString, String fullitemname){
-        String itemName = getItemName(fullitemname);
-        String[] filter = filterString.split(",");
-        return Arrays.stream(filter).anyMatch((filter_i) -> {
+
+    fun filterMatch(filterString: String, fullitemname: String?): Boolean {
+        val itemName = getItemName(fullitemname)
+        val filter = filterString.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        return Arrays.stream(filter).anyMatch { filter_i: String ->
             if (filter_i.endsWith("*")) {
-                return itemName.startsWith(filter_i.substring(0, filter_i.length() - 1));
-            }else if (filter_i.startsWith("*")) {
-                return itemName.endsWith(filter_i.substring(1));
+                return@anyMatch itemName!!.startsWith(filter_i.substring(0, filter_i.length - 1))
+            } else if (filter_i.startsWith("*")) {
+                return@anyMatch itemName!!.endsWith(filter_i.substring(1))
             } else {
-                return filter_i.equalsIgnoreCase(itemName);
-
+                return@anyMatch filter_i.equals(itemName, ignoreCase = true)
             }
-        });
-    }
-
-    @EventHandler
-    void onInventoryMoveItemEvent(InventoryMoveItemEvent event){
-        if(event.getDestination().getType().equals(InventoryType.HOPPER)
-            && event.getDestination().getHolder() instanceof Container){
-            String customName = ((Container) event.getDestination().getHolder()).getCustomName();
-            if(customName != null){
-                String itemName = event.getItem().getType().translationKey();
-                if(!filterMatch(customName,itemName)){
-                    event.setCancelled(true);
-                }
-
-            }
-
         }
     }
+
     @EventHandler
-    void onInventoryPickupItemEvent(InventoryPickupItemEvent event){
-        if(event.getInventory().getHolder() instanceof  Container){
-            String customName =((Container) event.getInventory().getHolder()).getCustomName();
-            if(customName != null){
-                String itemName = event.getItem().getItemStack().getType().translationKey();
-                if (!filterMatch(customName,itemName)){
-                    event.setCancelled(true);
+    fun onInventoryMoveItemEvent(event: InventoryMoveItemEvent) {
+        if (event.destination.type == InventoryType.HOPPER && event.destination.holder is Container) {
+            val customName = (event.destination.holder as Container?)!!.customName
+            if (customName != null) {
+                val itemName = event.item.type.translationKey()
+                if (!filterMatch(customName, itemName)) {
+                    event.isCancelled = true
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    fun onInventoryPickupItemEvent(event: InventoryPickupItemEvent) {
+        if (event.inventory.holder is Container) {
+            val customName = (event.inventory.holder as Container?)!!.customName
+            if (customName != null) {
+                val itemName = event.item.itemStack.type.translationKey()
+                if (!filterMatch(customName, itemName)) {
+                    event.isCancelled = true
                 }
             }
         }
