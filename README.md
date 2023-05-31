@@ -13,4 +13,5 @@ Press F3 + H, check items translationKey (minecraft:cobblestone - cobblestone is
 <h1>Wildcards</h1>
 You could use * before the translationKey to make it a wildcard, wildcard searches the line at the start of a translationKey or and the end of it. 
 
-![изображение](https://github.com/Zardexd/LivesOverflowHopperSort/assets/40138317/603fad3b-cb7e-4dc7-af40-67ffd137f58a)
+![изображение](https://github.com/Zardexd/LivesOverflowHopperSort/assets/40138317/fc6c4e6b-2b18-48df-b82c-31969871adb0)
+
