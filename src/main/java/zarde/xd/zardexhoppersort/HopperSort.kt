@@ -6,9 +6,11 @@ import org.bukkit.event.Listener
 import org.bukkit.event.inventory.InventoryMoveItemEvent
 import org.bukkit.event.inventory.InventoryPickupItemEvent
 import org.bukkit.event.inventory.InventoryType
+import org.bukkit.plugin.java.JavaPlugin
 import java.util.*
 
 class HopperSort : Listener {
+
     fun getItemName(translationKey: String?): String? {
         if (translationKey == null) return null
         val names = translationKey.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
