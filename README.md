@@ -1,7 +1,7 @@
 # LiveOverflow's HopperSort Plugin
 Allows Minecraft hoppers to sort items. 
 
-This plugin based on <a href="https://www.youtube.com/@LiveOverflow">LivesOverflow</a> HopperSorting plugin's code that he showed in one of his videos. 
+This plugin based on <a href="https://www.youtube.com/@LiveOverflow">LiveOverflow's</a> HopperSorting plugin's code that he showed in one of his videos. 
 It uses same logic, the only difference is that it was translated into Kotlin and compiled into a ready to use jar file. 
 
 <h1>How it works?</h1> 
