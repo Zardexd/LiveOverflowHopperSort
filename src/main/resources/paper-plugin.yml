@@ -1,0 +1,6 @@
+name: ZardexHopperSort
+version: '${project.version}'
+main: zarde.xd.zardexhoppersort.ZardexHopperSort
+api-version: 1.19
+authors: [ZardexdBruteForce]
+description: Plugin that allows hoppers to sort items.
